@@ -19,9 +19,13 @@ class ViewController: UIViewController {
     var score = 0
     // Initializes the scoring system of the game
     
+    var round = 1
+    // Intializes the round system of the game
+    
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var targetLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var roundLabel: UILabel!
 
     override func viewDidLoad() {
         
@@ -40,6 +44,8 @@ class ViewController: UIViewController {
     
     func updateLabels() {
         targetLabel.text = String(targetValue)
+        scoreLabel.text = String(score)
+        roundLabel.text = String(round)
     }
     // Refreshes the randomized number
     
@@ -67,16 +73,33 @@ class ViewController: UIViewController {
     @IBAction func showAlert() {
         
         let difference = abs(targetValue - currentValue)
-        let points = 100 - difference
-    
+        var points = 100 - difference
+        
+        let title: String
+        if difference == 0 {
+            title = "You're OnPoint!"
+            points = 100
+        }
+        else if difference < 2 {
+            title = "Almost"
+            points = 50
+        } else {
+            title = "Oof try again"
+            points = 0
+        }
+        
         score += points
+        round += 1
         
-        let message = "Your scored: \(points) points\n" 
+        let message = "You scored: \(points) points\n"
         
-        let alert = UIAlertController(title: "Hello, World!", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         // Alerts user with a notification containing a title and a message
         
-        let action = UIAlertAction(title: "Awesome", style: .default, handler: nil)
+        let action = UIAlertAction(title: "Continue", style: .default, handler: {
+            action in
+                self.startNewRound()
+        })
         // Allows user to dismiss the message/view controller
         
         alert.addAction(action)
@@ -84,10 +107,6 @@ class ViewController: UIViewController {
         
         present(alert, animated: true, completion: nil)
         // Presents the alert onto the iOS device's screen
-        
-        scoreLabel.text = String(score)
-        
-        startNewRound()
         
     }
   
