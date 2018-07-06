@@ -12,6 +12,7 @@
 		DD4ABEF920DAEA6100DB6431 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD4ABEF720DAEA6100DB6431 /* Main.storyboard */; };
 		DD4ABEFB20DAEA6100DB6431 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD4ABEFA20DAEA6100DB6431 /* Assets.xcassets */; };
 		DD4ABEFE20DAEA6100DB6431 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD4ABEFC20DAEA6100DB6431 /* LaunchScreen.storyboard */; };
+		DDDA14BA20EF07F000ED06DB /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDA14B920EF07F000ED06DB /* InfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		DD4ABEFA20DAEA6100DB6431 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD4ABEFD20DAEA6100DB6431 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DD4ABEFF20DAEA6100DB6431 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DDDA14B920EF07F000ED06DB /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				DD4ABEF320DAEA6100DB6431 /* AppDelegate.swift */,
 				DD4ABEF520DAEA6100DB6431 /* ViewController.swift */,
+				DDDA14B920EF07F000ED06DB /* InfoViewController.swift */,
 				DD4ABEF720DAEA6100DB6431 /* Main.storyboard */,
 				DD4ABEFA20DAEA6100DB6431 /* Assets.xcassets */,
 				DD4ABEFC20DAEA6100DB6431 /* LaunchScreen.storyboard */,
@@ -136,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD4ABEF620DAEA6100DB6431 /* ViewController.swift in Sources */,
+				DDDA14BA20EF07F000ED06DB /* InfoViewController.swift in Sources */,
 				DD4ABEF420DAEA6100DB6431 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         currentValue = lroundf(slider.value)
-        startNewRound()
+        gameReset()
     
     }
 
@@ -69,6 +69,13 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func gameReset() {
+        score = 0
+        round = 1
+        startNewRound()
+    }
+    // Resets the game from the beginning as if you restarted the app
+    
     
     @IBAction func showAlert() {
         
@@ -80,7 +87,7 @@ class ViewController: UIViewController {
             title = "You're OnPoint!"
             points = 100
         }
-        else if difference < 2 {
+        else if difference <= 2 {
             title = "Almost"
             points = 50
         } else {
