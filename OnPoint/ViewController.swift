@@ -8,12 +8,20 @@
 
 import UIKit
 
+
+
 class ViewController: UIViewController {
     
     var currentValue = 0
     // Initializes the slider
     
+    
     var targetValue = 0
+    var targetValueTwo = 0
+    var targetValueThree = 0
+    
+    //var targetValue = Array(repeating: 0, count: 3)
+    
     // Initializes the random number generator the user has to guess
     
     var score = 0
@@ -24,8 +32,13 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var targetLabel: UILabel!
+    @IBOutlet weak var targetLabelTwo: UILabel!
+    @IBOutlet weak var targetLabelThree: UILabel!
+    //@IBOutlet var targetLabels: Array<UILabel>?
+
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var roundLabel: UILabel!
+    
 
     override func viewDidLoad() {
         
@@ -50,8 +63,9 @@ class ViewController: UIViewController {
     // Refreshes the randomized number
     
     func startNewRound() {
-        
-        targetValue = 1 + Int(arc4random_uniform(100))
+        //for i in targetValue {
+            targetValue = 1 + Int(arc4random_uniform(100))
+        //}
         currentValue = 50
         slider.value = Float(currentValue)
         updateLabels()
