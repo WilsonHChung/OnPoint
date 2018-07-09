@@ -13,6 +13,8 @@ import UIKit
 class ViewController: UIViewController {
     
     var currentValue = 0
+    var currentValueTwo = 0
+    var currentValueThree = 0
     // Initializes the slider
     
     
@@ -31,6 +33,8 @@ class ViewController: UIViewController {
     // Intializes the round system of the game
     
     @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var sliderTwo: UISlider!
+    @IBOutlet weak var sliderThree: UISlider!
     @IBOutlet weak var targetLabel: UILabel!
     @IBOutlet weak var targetLabelTwo: UILabel!
     @IBOutlet weak var targetLabelThree: UILabel!
@@ -39,15 +43,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var roundLabel: UILabel!
     
-
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
         currentValue = lroundf(slider.value)
+        currentValueTwo = lroundf(sliderTwo.value)
+        currentValueThree = lroundf(sliderThree.value)
         gameReset()
-    
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,58 +57,94 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
     func updateLabels() {
         targetLabel.text = String(targetValue)
+        targetLabelTwo.text = String(targetValueTwo)
+        targetLabelThree.text = String (targetValueThree)
         scoreLabel.text = String(score)
         roundLabel.text = String(round)
     }
     // Refreshes the randomized number
     
-    func startNewRound() {
-        //for i in targetValue {
-            targetValue = 1 + Int(arc4random_uniform(100))
-        //}
+    func randomizer() {
+        targetValue = 1 + Int(arc4random_uniform(100))
+        targetValueTwo = 1 + Int(arc4random_uniform(100))
+        targetValueThree = 1 + Int(arc4random_uniform(100))
+    }
+    // Randomizes the target values for each of the sliders
+    
+    func sliderInitial(){
         currentValue = 50
         slider.value = Float(currentValue)
-        updateLabels()
-        
+        sliderTwo.value = Float(currentValue)
+        sliderThree.value = Float(currentValue)
     }
-    // Resets the current game round to a new one
+    // Initializes the slider values for the start of the round
+    
+    func startNewGame() {
+        score = 0
+        round = 1
+        randomizer()
+        sliderInitial()
+        updateLabels()
+    }
+    // Resets the current game round to a new round if the player is unable to score points
+    
+    func startNextRound() {
+        randomizer()
+        sliderInitial()
+        updateLabels()
+    }
+    // Resets the current game round to the next round if the player is able to score points
     
     @IBAction func sliderMoved(_ slider: UISlider) {
-    
-        print("The value of slider is now: \(slider.value)")
-        // Prints out the value of the object slider on the xcode terminal
+        print("The value of slider 1 is now: \(slider.value)")
+        // Prints out the value of the object slider on the xcode terminal (Used for debugging)
         
         currentValue = lroundf(slider.value)
         // Rounds the float in the parameter to the nearest integer value
-        
     }
+    
+    @IBAction func sliderMovedTwo(_ sliderTwo: UISlider){
+        print("The value of slider 2 is now: \(sliderTwo.value)")
+        currentValueTwo = lroundf(sliderTwo.value)
+    }
+    
+    @IBAction func sliderMovedThree(_ sliderThree: UISlider){
+        print("The value of slider 3 is now: \(sliderThree.value)")
+        currentValueThree = lroundf(sliderThree.value)
+    }
+    
     
     @IBAction func gameReset() {
         score = 0
         round = 1
-        startNewRound()
+        startNewGame()
     }
     // Resets the game from the beginning as if you restarted the app
     
     
     @IBAction func showAlert() {
+        let difference = abs((targetValue - currentValue) + (targetValueTwo - currentValueTwo) + (targetValueThree - currentValueThree))
+        // Calculates difference of all three sliders with the user's slider value and in comparison to its respective given target value
         
-        let difference = abs(targetValue - currentValue)
-        var points = 100 - difference
+        var points = 0
+        var result = false
+        // Used to determine whether the user scored points or not
         
         let title: String
         if difference == 0 {
             title = "You're OnPoint!"
             points = 100
         }
-        else if difference <= 2 {
+        else if difference <= 6 {
             title = "Almost"
             points = 50
         } else {
             title = "Oof try again"
             points = 0
+            result = true
         }
         
         score += points
@@ -119,7 +157,12 @@ class ViewController: UIViewController {
         
         let action = UIAlertAction(title: "Continue", style: .default, handler: {
             action in
-                self.startNewRound()
+                if (result == true) {
+                    self.startNewGame()
+                }
+                else {
+                    self.startNextRound()
+                }
         })
         // Allows user to dismiss the message/view controller
         
@@ -128,8 +171,6 @@ class ViewController: UIViewController {
         
         present(alert, animated: true, completion: nil)
         // Presents the alert onto the iOS device's screen
-        
     }
-  
 }
 
