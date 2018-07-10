@@ -26,11 +26,15 @@ class ViewController: UIViewController {
     
     // Initializes the random number generator the user has to guess
     
+    var round = 1
+    // Intializes the round system of the game
+    
+    var highestRound = 0
+    
     var score = 0
     // Initializes the scoring system of the game
     
-    var round = 1
-    // Intializes the round system of the game
+    var highestScore = 0
     
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var sliderTwo: UISlider!
@@ -40,8 +44,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var targetLabelThree: UILabel!
     //@IBOutlet var targetLabels: Array<UILabel>?
 
-    @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var roundLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var highRoundLabel: UILabel!
+    @IBOutlet weak var highScoreLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,6 +104,14 @@ class ViewController: UIViewController {
     }
     // Resets the current game round to the next round if the player is able to score points
     
+    func saveHigh() {
+        UserDefaults.standard.set(highestRound, forKey: "Hi-Round")
+        UserDefaults.standard.set(highestScore, forKey: "Hi-Score")
+        highRoundLabel.text = String(highestRound)
+        highScoreLabel.text = String(highestScore)
+    }
+    // Saves the highest round and score of the user even when the app is closed
+    
     @IBAction func sliderMoved(_ slider: UISlider) {
         print("The value of slider 1 is now: \(slider.value)")
         // Prints out the value of the object slider on the xcode terminal (Used for debugging)
@@ -105,16 +119,19 @@ class ViewController: UIViewController {
         currentValue = lroundf(slider.value)
         // Rounds the float in the parameter to the nearest integer value
     }
+    // Keeps track of the value of the first slider set by the user
     
     @IBAction func sliderMovedTwo(_ sliderTwo: UISlider){
         print("The value of slider 2 is now: \(sliderTwo.value)")
         currentValueTwo = lroundf(sliderTwo.value)
     }
+    // Keeps track of the value of the second slider set by the user
     
     @IBAction func sliderMovedThree(_ sliderThree: UISlider){
         print("The value of slider 3 is now: \(sliderThree.value)")
         currentValueThree = lroundf(sliderThree.value)
     }
+    // Keeps track of the value of the third slider set by the user
     
     
     @IBAction func gameReset() {
@@ -140,29 +157,36 @@ class ViewController: UIViewController {
         }
         else if difference <= 6 {
             title = "Almost"
-            points = 50
+            points = 10
         } else {
             title = "Oof try again"
             points = 0
             result = true
         }
         
-        score += points
         round += 1
+        score += points
         
         let message = "You scored: \(points) points\n"
-        
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         // Alerts user with a notification containing a title and a message
         
         let action = UIAlertAction(title: "Continue", style: .default, handler: {
             action in
+                if self.round > self.highestRound && self.score > self.highestScore {
+                    self.highestRound = self.round
+                    self.highestScore = self.score
+                    self.saveHigh()
+                }
+                // The if statement keeps track of the highest round and score the user has achieved
                 if (result == true) {
                     self.startNewGame()
                 }
                 else {
                     self.startNextRound()
                 }
+                // If the user was unable to score points, then the game resets to the beginning
+                // If the user was able to score points, then the game starts the next round
         })
         // Allows user to dismiss the message/view controller
         
